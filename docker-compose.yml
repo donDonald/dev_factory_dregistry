@@ -1,0 +1,53 @@
+version: '3.2'
+
+
+
+networks:
+    dregistry:
+        driver: bridge
+
+
+
+volumes:
+    dregistry-data:
+        driver: local
+
+
+
+services:
+
+
+
+    dregistry:
+        image: registry:2
+        hostname: dregistry
+        #restart: always
+        volumes:
+            #- ../../registry_volume:/data
+            - dregistry-data:/data
+        environment:
+            REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+        ports:
+            - "11131:5000"
+        networks:
+            - dregistry
+
+
+
+    # https://github.com/Joxit/docker-registry-ui
+    # Other UI options:
+    #     - https://github.com/Quiq/docker-registry-ui
+    #     - http://dockerlabs.collabnix.com/beginners/portus/
+    dregistry-ui:
+        image: joxit/docker-registry-ui:static
+        hostname: dregistryi-ui
+        #restart: always
+        ports:
+            - "11132:80"
+        environment:
+            REGISTRY_URL: "http://dregistry:11131"
+            DELETE_IMAGES: "true"
+            REGISTRY_TITLE: "Super registry"
+        networks:
+            - dregistry
+
