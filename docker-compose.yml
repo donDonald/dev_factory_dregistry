@@ -22,14 +22,15 @@ services:
     dregistry:
         image: registry:2
         hostname: dregistry
-        #restart: always
+        container_name: dregistry
+        restart: unless-stopped
         volumes:
             #- ../../registry_volume:/data
             - dregistry-data:/data
         environment:
             REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
         ports:
-            - "11131:5000"
+            - "80:5000"
         networks:
             - dregistry
 
@@ -42,7 +43,8 @@ services:
     dregistry-ui:
         image: joxit/docker-registry-ui:static
         hostname: dregistryi-ui
-        #restart: always
+        container_name: dregistry_ui
+        restart: unless-stopped
         ports:
             - "11132:80"
         environment:

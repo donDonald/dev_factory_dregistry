@@ -11,10 +11,11 @@
 It's a docker-compose file containing next services:
 ```
 $ docker-compose ps
-                Name                              Command               State            Ports         
--------------------------------------------------------------------------------------------------------
-dev-factory-dregistry_dregistry-ui_1   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:11132->80/tcp  
-dev-factory-dregistry_dregistry_1      /entrypoint.sh /etc/docker ...   Up      0.0.0.0:11131->5000/tcp
+    Name                  Command               State           Ports        
+-----------------------------------------------------------------------------
+dregistry      /entrypoint.sh /etc/docker ...   Up      0.0.0.0:80->5000/tcp 
+dregistry_ui   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:11132->80/tcp
+
 ```
 
 
@@ -37,7 +38,7 @@ $ sudo service docker restart
 
 ### Updating /etc/hosts
 ```
-$ echo "$(docker exec -it dev-factory-dregistry_dregistry_1 sh -c "hostname -i" | head -c-2) $(docker exec -it dev-factory-dregistry_dregistry_1 sh -c "hostname" | head -c-2)" | sudo tee -a /etc/hosts
+$ echo "$(docker exec -it dregistry sh -c "hostname -i" | head -c-2) $(docker exec -it dregistry sh -c "hostname" | head -c-2)" | sudo tee -a /etc/hosts
 ```
 Ensure /etc/hosts contains records for docker containers
 
@@ -45,7 +46,7 @@ Ensure /etc/hosts contains records for docker containers
 
 ### To launch
 ```
-$ docker-compose up -d --build
+$ docker-compose up
 ```
 
 
@@ -114,7 +115,7 @@ $ docker volume rm dev-factory-dregistry_dregistry-data
 
 
 ### Web services
-- [localhost](http://localhost:11132)
+- [localhost:11132](http://localhost:11132)
 
 
 
