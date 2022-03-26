@@ -109,7 +109,7 @@ $ docker pull dregistry:5000/auth-server:latest
 
 ### To cleanup volumes
 ```
-$ docker volume rm dev-factory-dregistry_dregistry-data
+$ docker volume rm dev_factory_dregistry_dregistry-data
 ```
 
 
